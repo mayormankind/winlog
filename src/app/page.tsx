@@ -42,8 +42,7 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabaseClient";
+// import { supabase } from "@/lib/supabaseClient";
 import EnhancementModal from "@/components/modal/enhancement-modal";
 
 export default function LandingPage() {
@@ -56,18 +55,18 @@ export default function LandingPage() {
   const router = useRouter();
 
   // Check for authenticated user and redirect to dashboard
-  useEffect(() => {
-    const checkUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        router.push("/dashboard");
-      }
-      setUser(user);
-    };
-    checkUser();
-  }, [supabase, router]);
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     const {
+  //       data: { user },
+  //     } = await supabase.auth.getUser();
+  //     if (user) {
+  //       router.push("/dashboard");
+  //     }
+  //     setUser(user);
+  //   };
+  //   checkUser();
+  // }, [supabase, router]);
 
   const handleAIEnhancement = async () => {
     if (!sampleAchievement.trim()) return;
