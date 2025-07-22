@@ -26,7 +26,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { GoogleIcon } from "@/components/ui/google-icon";
 
@@ -275,7 +275,7 @@ export default function SignInPage() {
               </div>
 
               {/* Remember Me */}
-              {/* <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2">
                 <Checkbox
                   id="remember"
                   checked={rememberMe}
@@ -290,7 +290,7 @@ export default function SignInPage() {
                 >
                   Remember me for 30 days
                 </Label>
-              </div> */}
+              </div>
 
               {/* Submit Button */}
               <motion.div
