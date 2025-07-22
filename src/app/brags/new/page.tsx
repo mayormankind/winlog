@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-// import { DashboardLayout } from "@/components/dashboard-layout"
 import {
   Save,
   Plus,
@@ -166,7 +165,7 @@ export default function NewBragPage() {
                 id="title"
                 placeholder="e.g., Reduced API response time by 75%"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e: any) => setTitle(e.target.value)}
                 className="rounded-xl border-slate-200 dark:border-slate-700"
               />
             </div>
@@ -267,7 +266,7 @@ export default function NewBragPage() {
                 <Input
                   placeholder="https://github.com/user/repo/pull/123 or description"
                   value={link}
-                  onChange={(e) => updateProofLink(index, e.target.value)}
+                  onChange={(e: any) => updateProofLink(index, e.target.value)}
                   className="rounded-xl border-slate-200 dark:border-slate-700"
                 />
                 {proofLinks.length > 1 && (
@@ -316,13 +315,15 @@ export default function NewBragPage() {
                     className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200"
                   >
                     {tag}
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       type="button"
                       onClick={() => removeTag(tag)}
                       className="ml-2 hover:text-indigo-600"
                     >
                       <X className="w-3 h-3" />
-                    </button>
+                    </Button>
                   </Badge>
                 ))}
               </div>
@@ -333,8 +334,8 @@ export default function NewBragPage() {
               <Input
                 placeholder="Add custom tag..."
                 value={customTag}
-                onChange={(e) => setCustomTag(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && addCustomTag()}
+                onChange={(e: any) => setCustomTag(e.target.value)}
+                onKeyPress={(e: any) => e.key === "Enter" && addCustomTag()}
                 className="rounded-xl border-slate-200 dark:border-slate-700"
               />
               <Button
