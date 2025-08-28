@@ -144,17 +144,20 @@ export default function BragsPage() {
         </div>
 
         {/* Search and Filter */}
-        <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800">
-          <CardContent className="p-6">
+        <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800 p-0 md:p-4">
+          <CardContent className="p-4 md:p-6">
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-                <Input
-                  placeholder="Search your achievements..."
-                  className="pl-10 rounded-xl border-slate-200 dark:border-slate-700"
-                />
-              </div>
-              <Button variant="outline" className="rounded-xl">
+              <Input
+                leftIcon={<Search className="w-4 h-4" />}
+                placeholder="Search your achievements..."
+                className="rounded-xl border-slate-200 dark:border-slate-700 py-6"
+              />
+              <Button
+                variant="outline"
+                className="rounded-xl p-4 md:p-6"
+                title="Filter search"
+                aria-label="Filter Search"
+              >
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
@@ -178,7 +181,7 @@ export default function BragsPage() {
                 className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800 hover:shadow-xl transition-shadow"
               >
                 <CardHeader className="pb-4">
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between flex-wrap">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3 mb-2">
                         <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-700">
@@ -201,6 +204,8 @@ export default function BragsPage() {
                         variant="ghost"
                         size="icon"
                         className="rounded-xl"
+                        title="Edit Achievement"
+                        aria-label="Edit Achievement"
                       >
                         <Edit className="w-4 h-4" />
                       </Button>
@@ -208,6 +213,8 @@ export default function BragsPage() {
                         variant="ghost"
                         size="icon"
                         className="rounded-xl text-red-600 hover:text-red-700"
+                        title="Delete Achievement"
+                        aria-label="Delete Achievement"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { Listdisc } from "@/components/ui/list-disc";
 
 const categories = [
   "Performance",
@@ -108,7 +109,7 @@ export default function NewBragPage() {
         </div>
 
         {/* Tips Card */}
-        <Card className="border-0 shadow-lg rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950">
+        <Card className="border-0 shadow-lg rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-950 dark:to-purple-950">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
               <Lightbulb className="w-5 h-5 mr-2 text-indigo-600 dark:text-indigo-400" />
@@ -118,31 +119,24 @@ export default function NewBragPage() {
           <CardContent>
             <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
               <li className="flex items-start">
-                <span className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                <span>
-                  Be specific with numbers and metrics (e.g., "reduced load time
-                  by 75%" vs "made it faster")
-                </span>
+                <Listdisc />
+                Be specific with numbers and metrics (e.g., "reduced load time
+                by 75%" vs "made it faster")
               </li>
               <li className="flex items-start">
-                <span className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                <span>
-                  Include the business impact and who benefited from your work
-                </span>
+                <Listdisc />
+                Include the business impact and who benefited from your work
               </li>
               <li className="flex items-start">
-                <span className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                <span>
-                  Add proof like GitHub links, screenshots, or performance
-                  reports
-                </span>
+                <Listdisc />
+                Add proof like GitHub links, screenshots, or performance reports
               </li>
             </ul>
           </CardContent>
         </Card>
 
         {/* Main Form */}
-        <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800">
+        <Card className="border-0 shadow-lg rounded-2xl bg-indigo-50 dark:bg-slate-800">
           <CardHeader className="pb-6">
             <CardTitle className="text-xl font-bold text-slate-900 dark:text-white flex items-center">
               <FileText className="w-5 h-5 mr-2" />

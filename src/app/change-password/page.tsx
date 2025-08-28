@@ -32,27 +32,16 @@ export default function ForgotPasswordPage() {
   const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
-      setError("Email is required");
-      return;
-    }
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Please enter a valid email");
-      return;
-    }
 
     setIsLoading(true);
     setError("");
     try {
-      await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/change-password`,
-      });
-      toast.success("Account Password changed successfully");
+      await supabase.auth.updateUser({ password: password });
       setIsSuccess(true);
     } catch (err: any) {
       toast.error(err);
@@ -173,8 +162,8 @@ export default function ForgotPasswordPage() {
                   <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                  If an account with <strong>{email}</strong> exists, you'll
-                  receive a password reset email shortly.
+                  Your password has been changed successfully. You can login
+                  now.
                 </p>
                 <Link href="/signin">
                   <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl py-3 font-semibold">
@@ -194,18 +183,18 @@ export default function ForgotPasswordPage() {
                     htmlFor="email"
                     className="text-sm font-semibold text-slate-700 dark:text-slate-300"
                   >
-                    Email Address
+                    Password
                   </Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={email}
+                      id="password"
+                      name="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      value={password}
                       onChange={(e: any) => {
-                        setEmail(e.target.value);
+                        setPassword(e.target.value);
                         if (error) setError("");
                       }}
                       className={`pl-10 rounded-xl border-2 transition-all ${
@@ -239,10 +228,10 @@ export default function ForgotPasswordPage() {
                     {isLoading ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Sending Reset Link...
+                        Changing Password...
                       </>
                     ) : (
-                      "Send Reset Link"
+                      "Change Password"
                     )}
                   </Button>
                 </motion.div>

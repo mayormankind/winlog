@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -19,75 +22,80 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-
-// Mock data for recent brags
-const recentBrags = [
-  {
-    id: 1,
-    title: "Reduced API Response Time by 75%",
-    impact: "Improved user experience for 50K+ users",
-    date: "2024-12-15",
-    category: "Performance",
-    proofCount: 2,
-  },
-  {
-    id: 2,
-    title: "Led Cross-Team Initiative for New Feature",
-    impact: "Delivered 3 weeks ahead of schedule",
-    date: "2024-12-10",
-    category: "Leadership",
-    proofCount: 4,
-  },
-  {
-    id: 3,
-    title: "Mentored 3 Junior Developers",
-    impact: "All received positive performance reviews",
-    date: "2024-12-05",
-    category: "Mentorship",
-    proofCount: 1,
-  },
-];
-
-const stats = [
-  {
-    title: "Total Brags",
-    value: "24",
-    change: "+3 this month",
-    icon: FileText,
-    color: "text-indigo-600 dark:text-indigo-400",
-  },
-  {
-    title: "Impact Score",
-    value: "8.7/10",
-    change: "+0.5 from last month",
-    icon: TrendingUp,
-    color: "text-emerald-600 dark:text-emerald-400",
-  },
-  {
-    title: "Categories",
-    value: "6",
-    change: "Technical, Leadership, etc.",
-    icon: Target,
-    color: "text-purple-600 dark:text-purple-400",
-  },
-  {
-    title: "This Quarter",
-    value: "12",
-    change: "Strong performance period",
-    icon: Award,
-    color: "text-orange-600 dark:text-orange-400",
-  },
-];
+import { useUserStore } from "@/stores/useUserStore";
+import { useAchievementsStore } from "@/stores/useAchievementsStore";
+import { Toaster, toast } from "sonner";
 
 export default function Dashboard() {
+  const {
+    user,
+    isLoading: userLoading,
+    error: userError,
+    fetchUser,
+  } = useUserStore();
+  const {
+    achievements,
+    stats,
+    isLoading: achievementsLoading,
+    error: achievementsError,
+    fetchAchievements,
+  } = useAchievementsStore();
+
+  useEffect(() => {
+    fetchUser();
+    fetchAchievements();
+  }, [fetchUser, fetchAchievements]);
+
+  useEffect(() => {
+    if (userError) toast.error(userError);
+    if (achievementsError) toast.error(achievementsError);
+  }, [userError, achievementsError]);
+
+  if (userLoading || achievementsLoading) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+            <p className="mt-4 text-slate-600 dark:text-slate-300">
+              Loading...
+            </p>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  if (!user) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center justify-center min-h-screen">
+          <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800">
+            <CardContent className="p-6 text-center">
+              <p className="text-slate-600 dark:text-slate-300 mb-4">
+                Please sign in to view your dashboard.
+              </p>
+              <Link href="/signin">
+                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl">
+                  Sign In
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout>
+      <Toaster position="top-center" richColors />
       <div className="space-y-8">
         {/* Welcome Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-              Welcome back, John! 👋
+              Welcome back, {user.first_name || user.username}! 👋
             </h1>
             <p className="text-slate-600 dark:text-slate-300 mt-2">
               Here's what you've accomplished recently
@@ -103,7 +111,36 @@ export default function Dashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
+          {[
+            {
+              title: "Total Brags",
+              value: stats.totalBrags.toString(),
+              change: "+3 this month",
+              icon: FileText,
+              color: "text-indigo-600 dark:text-indigo-400",
+            },
+            {
+              title: "Impact Score",
+              value: stats.impactScore,
+              change: "+0.5 from last month",
+              icon: TrendingUp,
+              color: "text-emerald-600 dark:text-emerald-400",
+            },
+            {
+              title: "Categories",
+              value: stats.categories,
+              change: "Technical, Leadership, etc.",
+              icon: Target,
+              color: "text-purple-600 dark:text-purple-400",
+            },
+            {
+              title: "This Quarter",
+              value: stats.thisQuarter.toString(),
+              change: "Strong performance period",
+              icon: Award,
+              color: "text-orange-600 dark:text-orange-400",
+            },
+          ].map((stat, index) => (
             <Card
               key={index}
               className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800"
@@ -154,37 +191,45 @@ export default function Dashboard() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                {recentBrags.map((brag) => (
-                  <div
-                    key={brag.id}
-                    className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
-                        {brag.title}
-                      </h3>
-                      <Badge variant="outline" className="text-xs">
-                        {brag.category}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
-                      {brag.impact}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="w-3 h-3" />
-                        <span>{new Date(brag.date).toLocaleDateString()}</span>
+                {achievements.length === 0 ? (
+                  <p className="text-center text-slate-600 dark:text-slate-300">
+                    No achievements yet. Add your first brag!
+                  </p>
+                ) : (
+                  achievements.slice(0, 3).map((brag: any) => (
+                    <div
+                      key={brag.id}
+                      className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
+                          {brag.title}
+                        </h3>
+                        <Badge variant="outline" className="text-xs">
+                          {brag.category}
+                        </Badge>
                       </div>
-                      <div className="flex items-center space-x-1">
-                        <ExternalLink className="w-3 h-3" />
-                        <span>
-                          {brag.proofCount} proof
-                          {brag.proofCount !== 1 ? "s" : ""}
-                        </span>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
+                        {brag.impact}
+                      </p>
+                      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                        <div className="flex items-center space-x-2">
+                          <Calendar className="w-3 h-3" />
+                          <span>
+                            {new Date(brag.date).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <ExternalLink className="w-3 h-3" />
+                          <span>
+                            {brag.proof_count} proof
+                            {brag.proof_count !== 1 ? "s" : ""}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </CardContent>
             </Card>
           </div>

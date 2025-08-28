@@ -20,7 +20,7 @@ function Input({
   return (
     <div className="relative w-full">
       {leftIcon && (
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
           {leftIcon}
         </div>
       )}
@@ -44,9 +44,9 @@ function Input({
           type="button"
           variant="ghost"
           onClick={() => setShow(!show)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 focus:outline-none"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 focus:outline-none"
         >
-          {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          {show ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
         </Button>
       )}
 
