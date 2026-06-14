@@ -1,104 +1,41 @@
 "use client";
 
+import { useEffect, useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import {
   Search,
-  Filter,
   Plus,
   Calendar,
   ExternalLink,
   Edit,
   Trash2,
-  Eye,
   TrendingUp,
   Users,
   Code,
   Award,
   Target,
+  Eye,
+  X,
+  FileText,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { useAchievementsStore } from "@/stores/useAchievementsStore";
+import { Toaster, toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
-// Mock data for brags
-const brags = [
-  {
-    id: 1,
-    title: "Reduced API Response Time by 75%",
-    description:
-      "Identified and optimized database queries in our user authentication service, implemented Redis caching, and refactored the API endpoints.",
-    impact:
-      "Reduced average API response time from 2.4s to 600ms, improving user experience for 50,000+ daily active users and reducing server costs by $800/month.",
-    category: "Performance",
-    date: "2024-12-15",
-    proofs: ["GitHub PR #1234", "Performance Report"],
-    tags: ["Backend", "Optimization", "Cost Savings"],
-  },
-  {
-    id: 2,
-    title: "Led Cross-Team Initiative for New Feature",
-    description:
-      "Coordinated with design, product, and QA teams to deliver a new user dashboard feature that had been requested by 40% of our user base.",
-    impact:
-      "Delivered 3 weeks ahead of schedule, resulting in 25% increase in user engagement and 15% reduction in support tickets.",
-    category: "Leadership",
-    date: "2024-12-10",
-    proofs: ["Project Timeline", "User Metrics", "Team Feedback", "Demo Video"],
-    tags: ["Project Management", "Cross-functional", "User Experience"],
-  },
-  {
-    id: 3,
-    title: "Mentored 3 Junior Developers",
-    description:
-      "Provided weekly 1:1 mentoring sessions, code reviews, and career guidance to three junior developers on the team.",
-    impact:
-      "All three mentees received positive performance reviews and one was promoted to mid-level developer.",
-    category: "Mentorship",
-    date: "2024-12-05",
-    proofs: ["Performance Reviews"],
-    tags: ["Mentoring", "Team Development", "Knowledge Sharing"],
-  },
-  {
-    id: 4,
-    title: "Implemented Automated Testing Suite",
-    description:
-      "Built comprehensive end-to-end testing framework using Cypress and integrated it into our CI/CD pipeline.",
-    impact:
-      "Reduced manual testing time by 60% and caught 15+ critical bugs before production deployment.",
-    category: "Quality Assurance",
-    date: "2024-11-28",
-    proofs: ["GitHub Repository", "Test Coverage Report"],
-    tags: ["Testing", "Automation", "DevOps"],
-  },
-  {
-    id: 5,
-    title: "Redesigned User Onboarding Flow",
-    description:
-      "Collaborated with UX team to redesign the user onboarding process based on user feedback and analytics.",
-    impact:
-      "Increased user completion rate from 45% to 78% and reduced time-to-first-value by 40%.",
-    category: "Product",
-    date: "2024-11-20",
-    proofs: ["Analytics Dashboard", "A/B Test Results", "User Feedback"],
-    tags: ["UX", "Product Design", "User Research"],
-  },
-  {
-    id: 6,
-    title: "Open Source Contribution",
-    description:
-      "Contributed a major feature to a popular React library used by our team, fixing a long-standing issue.",
-    impact:
-      "Feature was merged and is now used by 10,000+ developers. Improved our team's development velocity by 20%.",
-    category: "Open Source",
-    date: "2024-11-15",
-    proofs: ["GitHub PR", "Community Feedback"],
-    tags: ["Open Source", "React", "Community"],
-  },
-];
-
-const categoryIcons = {
+const categoryIcons: Record<string, React.ElementType> = {
   Performance: TrendingUp,
   Leadership: Users,
   Mentorship: Award,
@@ -107,7 +44,7 @@ const categoryIcons = {
   "Open Source": Code,
 };
 
-const categoryColors = {
+const categoryColors: Record<string, string> = {
   Performance:
     "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200",
   Leadership:
@@ -122,8 +59,59 @@ const categoryColors = {
 };
 
 export default function BragsPage() {
+  const router = useRouter();
+  const {
+    achievements,
+    isLoading,
+    error,
+    fetchAchievements,
+    deleteAchievement,
+  } = useAchievementsStore();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    fetchAchievements();
+  }, [fetchAchievements]);
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
+
+  const allCategories = useMemo(
+    () => [...new Set(achievements.map((a) => a.category).filter(Boolean))],
+    [achievements]
+  );
+
+  const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return achievements.filter((a) => {
+      const matchesSearch =
+        !q ||
+        a.title.toLowerCase().includes(q) ||
+        (a.description ?? "").toLowerCase().includes(q) ||
+        a.impact.toLowerCase().includes(q) ||
+        (a.tags ?? []).some((t) => t.toLowerCase().includes(q));
+      const matchesCategory = !activeCategory || a.category === activeCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [achievements, searchQuery, activeCategory]);
+
+  const handleDelete = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
+    await deleteAchievement(deleteId);
+    setIsDeleting(false);
+    setDeleteId(null);
+    toast.success("Achievement deleted.");
+  };
+
   return (
     <DashboardLayout>
+      <Toaster position="top-center" richColors />
       <div className="space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -143,147 +131,234 @@ export default function BragsPage() {
           </Link>
         </div>
 
-        {/* Search and Filter */}
-        <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800 p-0 md:p-4">
-          <CardContent className="p-4 md:p-6">
-            <div className="flex flex-col sm:flex-row gap-4">
+        {/* Search */}
+        <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800">
+          <CardContent className="p-4 md:p-6 space-y-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <Input
-                leftIcon={<Search className="w-4 h-4" />}
-                placeholder="Search your achievements..."
-                className="rounded-xl border-slate-200 dark:border-slate-700 py-6"
+                placeholder="Search achievements by title, description, or tag…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 rounded-xl border-slate-200 dark:border-slate-700"
               />
-              <Button
-                variant="outline"
-                className="rounded-xl p-4 md:p-6"
-                title="Filter search"
-                aria-label="Filter Search"
-              >
-                <Filter className="w-4 h-4 mr-2" />
-                Filter
-              </Button>
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
+            {allCategories.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveCategory(null)}
+                  className={`text-xs px-3 py-1 rounded-full border font-medium transition-colors ${
+                    !activeCategory
+                      ? "bg-indigo-600 text-white border-indigo-600"
+                      : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  }`}
+                >
+                  All
+                </button>
+                {allCategories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() =>
+                      setActiveCategory(activeCategory === cat ? null : cat)
+                    }
+                    className={`text-xs px-3 py-1 rounded-full border font-medium transition-colors ${
+                      activeCategory === cat
+                        ? "bg-indigo-600 text-white border-indigo-600"
+                        : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        {/* Brags Grid */}
-        <div className="grid gap-6">
-          {brags.map((brag) => {
-            const IconComponent =
-              categoryIcons[brag.category as keyof typeof categoryIcons] ||
-              Target;
-            const categoryColor =
-              categoryColors[brag.category as keyof typeof categoryColors] ||
-              "bg-gray-100 text-gray-800";
+        {/* Loading state */}
+        {isLoading && (
+          <div className="flex justify-center py-12">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-indigo-600" />
+          </div>
+        )}
 
-            return (
-              <Card
-                key={brag.id}
-                className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800 hover:shadow-xl transition-shadow"
-              >
-                <CardHeader className="pb-4">
-                  <div className="flex items-start justify-between flex-wrap">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-700">
-                          <IconComponent className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+        {/* Empty state */}
+        {!isLoading && filtered.length === 0 && (
+          <div className="text-center py-16">
+            <FileText className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
+            <p className="text-slate-600 dark:text-slate-300 font-medium">
+              {searchQuery || activeCategory
+                ? "No achievements match your search."
+                : "No achievements yet. Add your first brag!"}
+            </p>
+            {!searchQuery && !activeCategory && (
+              <Link href="/brags/new">
+                <Button className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add New Brag
+                </Button>
+              </Link>
+            )}
+          </div>
+        )}
+
+        {/* Brags Grid */}
+        {!isLoading && filtered.length > 0 && (
+          <div className="grid gap-6">
+            {filtered.map((brag) => {
+              const IconComponent = categoryIcons[brag.category] || Target;
+              const categoryColor =
+                categoryColors[brag.category] || "bg-gray-100 text-gray-800";
+
+              return (
+                <Card
+                  key={brag.id}
+                  className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-800 hover:shadow-xl transition-shadow"
+                >
+                  <CardHeader className="pb-4">
+                    <div className="flex items-start justify-between flex-wrap gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center flex-wrap gap-2 mb-2">
+                          <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 shrink-0">
+                            <IconComponent className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                          </div>
+                          <Badge className={`${categoryColor} border-0`}>
+                            {brag.category}
+                          </Badge>
+                          <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {new Date(brag.date).toLocaleDateString()}
+                          </div>
                         </div>
-                        <Badge className={`${categoryColor} border-0`}>
-                          {brag.category}
-                        </Badge>
-                        <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
-                          <Calendar className="w-4 h-4 mr-1" />
-                          {new Date(brag.date).toLocaleDateString()}
+                        <CardTitle className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                          {brag.title}
+                        </CardTitle>
+                      </div>
+                      <div className="flex items-center space-x-1 shrink-0">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="rounded-xl"
+                          title="Edit Achievement"
+                          aria-label="Edit Achievement"
+                          onClick={() =>
+                            router.push(`/brags/new?edit=${brag.id}`)
+                          }
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="rounded-xl text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950"
+                          title="Delete Achievement"
+                          aria-label="Delete Achievement"
+                          onClick={() => setDeleteId(brag.id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {brag.description && (
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                          What I did:
+                        </h4>
+                        <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                          {brag.description}
+                        </p>
+                      </div>
+                    )}
+
+                    <div>
+                      <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                        Impact:
+                      </h4>
+                      <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        {brag.impact}
+                      </p>
+                    </div>
+
+                    {brag.proofs && brag.proofs.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                          Proof:
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {brag.proofs.map((proof, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              {proof}
+                            </Badge>
+                          ))}
                         </div>
                       </div>
-                      <CardTitle className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-                        {brag.title}
-                      </CardTitle>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="rounded-xl"
-                        title="Edit Achievement"
-                        aria-label="Edit Achievement"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="rounded-xl text-red-600 hover:text-red-700"
-                        title="Delete Achievement"
-                        aria-label="Delete Achievement"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
-                      What I did:
-                    </h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                      {brag.description}
-                    </p>
-                  </div>
+                    )}
 
-                  <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
-                      Impact:
-                    </h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                      {brag.impact}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
-                      Proof:
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {brag.proofs.map((proof, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="text-xs"
-                        >
-                          <ExternalLink className="w-3 h-3 mr-1" />
-                          {proof}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex flex-wrap gap-2">
-                      {brag.tags.map((tag, index) => (
-                        <Badge
-                          key={index}
-                          variant="secondary"
-                          className="text-xs bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Load More */}
-        <div className="text-center">
-          <Button variant="outline" className="rounded-xl">
-            Load More Brags
-          </Button>
-        </div>
+                    {brag.tags && brag.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {brag.tags.map((tag, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <DialogContent className="rounded-2xl">
+          <DialogHeader>
+            <DialogTitle>Delete Achievement</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete this
+              achievement from your records.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              className="rounded-xl"
+              onClick={() => setDeleteId(null)}
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="rounded-xl bg-red-600 hover:bg-red-700 text-white"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting…" : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
 }

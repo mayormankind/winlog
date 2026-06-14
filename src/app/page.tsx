@@ -34,7 +34,7 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-// import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabaseClient";
 import EnhancementModal from "@/components/modal/enhancement-modal";
 
 export default function LandingPage() {
@@ -46,58 +46,40 @@ export default function LandingPage() {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
-  // Check for authenticated user and redirect to dashboard
-  // useEffect(() => {
-  //   const checkUser = async () => {
-  //     const {
-  //       data: { user },
-  //     } = await supabase.auth.getUser();
-  //     if (user) {
-  //       router.push("/dashboard");
-  //     }
-  //     setUser(user);
-  //   };
-  //   checkUser();
-  // }, [supabase, router]);
+  useEffect(() => {
+    const checkUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        router.push("/dashboard");
+      }
+      setUser(user);
+    };
+    checkUser();
+  }, [router]);
 
   const handleAIEnhancement = async () => {
     if (!sampleAchievement.trim()) return;
     setEnhancingModal(true);
     setIsEnhancing(true);
-    // Simulate AI enhancement with xAI API
-    setTimeout(() => {
-      const enhanced = `Optimized database queries and implemented Redis caching for user authentication service, resulting in 75% reduction in API response time (from 2.4s to 600ms), improving user experience for 50,000+ daily active users and reducing server costs by $800/month. Delivered measurable performance improvements that directly impacted user satisfaction and operational efficiency.`;
-      setEnhancedAchievement(enhanced);
+    try {
+      const response = await fetch("/api/enhance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ achievement: sampleAchievement }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Enhancement failed");
+      setEnhancedAchievement(data.enhanced);
+    } catch (error: any) {
+      setEnhancedAchievement(
+        error.message || "Failed to enhance achievement. Please try again!"
+      );
+    } finally {
       setIsEnhancing(false);
-    }, 2000);
+    }
   };
-
-  // const handleAIEnhancement = async () => {
-  //   setIsEnhancing(true);
-  //   try {
-  //     const response = await fetch("https://api.x.ai/v1/text-generation", {
-  //       // Replace with actual endpoint
-  //       method: "POST",
-  //       headers: {
-  //         Authorization: `Bearer ${process.env.XAI_API_KEY}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         prompt: `Enhance this achievement for a professional resume: ${sampleAchievement}`,
-  //         max_tokens: 150,
-  //       }),
-  //     });
-  //     const data = await response.json();
-  //     setEnhancedAchievement(data.result || "Error enhancing achievement.");
-  //   } catch (error) {
-  //     setEnhancedAchievement(
-  //       "Failed to enhance achievement. Please try again!"
-  //     );
-  //     console.error("xAI API error:", error);
-  //   } finally {
-  //     setIsEnhancing(false);
-  //   }
-  // };
 
   const shareOnX = (text: string) => {
     const url = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
@@ -147,7 +129,7 @@ export default function LandingPage() {
         <meta property="og:type" content="website" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-blue-950 dark:to-purple-950">
+      <div className="min-h-screen bg-gradient-to-br from-white via-amber-50/40 to-orange-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
         {/* Header */}
         <motion.header
           initial={{ y: -100 }}
@@ -160,10 +142,10 @@ export default function LandingPage() {
                 className="flex items-center space-x-2"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                <div className="w-8 h-8 bg-amber-500 rounded-xl flex items-center justify-center">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="text-xl font-bold text-amber-500">
                   WinLog
                 </span>
               </motion.div>
@@ -203,7 +185,7 @@ export default function LandingPage() {
 
         {/* Hero Section */}
         <section className="py-20 lg:py-32 relative  w-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-green-500/10 animate-pulse"></div>
+          <div className="absolute inset-0 bg-amber-400/5"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
             <motion.div
               className="text-center max-w-4xl mx-auto"
@@ -229,7 +211,7 @@ export default function LandingPage() {
                 transition={{ delay: 0.4 }}
               >
                 Never forget your{" "}
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
                   achievements
                 </span>{" "}
                 again
@@ -260,7 +242,7 @@ export default function LandingPage() {
                   >
                     <Button
                       size="lg"
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-2xl px-8 py-4 font-semibold shadow-lg hover:shadow-xl transition-all w-full"
+                      className="bg-amber-500 hover:bg-amber-600 text-white rounded-2xl px-8 py-4 font-semibold shadow-lg hover:shadow-xl transition-all w-full"
                     >
                       Start Logging Wins
                       <ArrowRight className="ml-2 w-5 h-5" />
@@ -735,7 +717,7 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-500 relative overflow-hidden">
+        <section className="py-20 bg-amber-500 relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <motion.div
             className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative"
@@ -774,7 +756,7 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-4 gap-8">
               <div>
                 <div className="flex items-center space-x-2 mb-4">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                  <div className="w-8 h-8 bg-amber-500 rounded-xl flex items-center justify-center">
                     <TrendingUp className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-xl font-bold">WinLog</span>

@@ -60,7 +60,7 @@ function AppSidebar() {
     <Sidebar className="border-r border-slate-200 dark:border-slate-800">
       <SidebarHeader className="border-b border-slate-200 dark:border-slate-800 p-4">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-8 h-8 bg-amber-500 rounded-xl flex items-center justify-center">
             <TrendingUp className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-bold text-slate-900 dark:text-white">
@@ -96,14 +96,15 @@ function AppSidebar() {
         <div className="flex items-center space-x-3">
           <Avatar className="w-8 h-8">
             <AvatarImage src="/placeholder.svg?height=32&width=32" />
-            <AvatarFallback className="bg-indigo-100 text-indigo-600 text-sm font-semibold">
-              JD
+            <AvatarFallback className="bg-amber-100 text-amber-700 text-sm font-semibold">
+              {user?.first_name?.[0] ?? user?.username?.[0] ?? "?"}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-slate-900 dark:text-white truncate">
-              {user?.first_name ? user?.first_name : user?.username || ""}
-              {user?.first_name} {user?.last_name || ""}
+              {user?.first_name
+                ? `${user.first_name}${user.last_name ? ` ${user.last_name}` : ""}`
+                : user?.username ?? ""}
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
               {user?.email || ""}
@@ -171,8 +172,8 @@ function TopBar() {
                         : "/placeholder.svg?height=40&width=40"
                     } `}
                   />
-                  <AvatarFallback className="bg-indigo-100 text-indigo-600 font-semibold">
-                    JD
+                  <AvatarFallback className="bg-amber-100 text-amber-700 font-semibold">
+                    {user?.first_name?.[0] ?? user?.username?.[0] ?? "?"}
                   </AvatarFallback>
                 </Avatar>
               </Button>
