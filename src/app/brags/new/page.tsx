@@ -162,7 +162,7 @@ function BragForm() {
       </div>
 
       {/* Tips Card */}
-      <Card className="border-0 shadow-lg rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30">
+      <Card className="border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
             <Lightbulb className="w-5 h-5 mr-2 text-amber-500" />

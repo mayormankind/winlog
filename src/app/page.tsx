@@ -129,7 +129,7 @@ export default function LandingPage() {
         <meta property="og:type" content="website" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-white via-amber-50/40 to-orange-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
+      <div className="min-h-screen bg-white dark:bg-slate-900">
         {/* Header */}
         <motion.header
           initial={{ y: -100 }}
@@ -185,7 +185,6 @@ export default function LandingPage() {
 
         {/* Hero Section */}
         <section className="py-20 lg:py-32 relative  w-full overflow-hidden">
-          <div className="absolute inset-0 bg-amber-400/5"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
             <motion.div
               className="text-center max-w-4xl mx-auto"
@@ -211,7 +210,7 @@ export default function LandingPage() {
                 transition={{ delay: 0.4 }}
               >
                 Never forget your{" "}
-                <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
+                <span className="text-amber-500">
                   achievements
                 </span>{" "}
                 again
@@ -290,9 +289,9 @@ export default function LandingPage() {
               viewport={{ once: true }}
             >
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 hover:shadow-xl transition-shadow min-h-80 gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow min-h-80 gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <FileText className="w-8 h-8 text-white" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
@@ -309,9 +308,9 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-950 dark:to-teal-950 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <CheckCircle className="w-8 h-8 text-white" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
@@ -328,9 +327,9 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <TrendingUp className="w-8 h-8 text-white" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
@@ -347,9 +346,9 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950 dark:to-blue-950 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <Brain className="w-8 h-8 text-white" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
@@ -388,7 +387,7 @@ export default function LandingPage() {
 
               {/* Key Stat */}
               <motion.div
-                className="inline-block bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900 dark:to-orange-900 rounded-2xl p-6 mb-12"
+                className="inline-block bg-amber-100 dark:bg-amber-900/30 rounded-2xl p-6 mb-12"
                 whileHover={{ scale: 1.05 }}
               >
                 <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">
@@ -502,7 +501,7 @@ export default function LandingPage() {
                     achievement stories."
                   </p>
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white font-semibold">
                       SK
                     </div>
                     <div className="ml-3">
@@ -531,7 +530,7 @@ export default function LandingPage() {
                     professional document ready for any opportunity."
                   </p>
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white font-semibold">
                       MR
                     </div>
                     <div className="ml-3">
@@ -574,7 +573,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <Card className="border-0 shadow-xl rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
+                <Card className="border-0 shadow-xl rounded-2xl bg-amber-50 dark:bg-amber-950/20">
                   <CardHeader>
                     <CardTitle className="flex items-center text-xl font-bold text-slate-900 dark:text-white">
                       <Zap className="w-5 h-5 mr-2 text-purple-600" />
@@ -598,7 +597,7 @@ export default function LandingPage() {
                     <Button
                       onClick={handleAIEnhancement}
                       disabled={isEnhancing || !sampleAchievement.trim()}
-                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                      className="w-full bg-amber-500 hover:bg-amber-600"
                     >
                       {isEnhancing ? (
                         <>
@@ -647,7 +646,7 @@ export default function LandingPage() {
                 viewport={{ once: true }}
               >
                 <Card className="pt-0 border-0 shadow-xl rounded-2xl overflow-hidden">
-                  <CardHeader className="bg-gradient-to-r from-blue-600 via-purple-600 to-purple-500 text-white p-4">
+                  <CardHeader className="bg-amber-500 text-white p-4">
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="text-xl font-bold mb-2">
@@ -702,7 +701,7 @@ export default function LandingPage() {
                               "I logged a win with WinLog! 🚀 Reduced API response time by 75% and saved my company $800/month. #WinLog #BuildWithAI"
                             )
                           }
-                          className="w-full bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white"
+                          className="w-full bg-amber-500 hover:bg-amber-600 text-white"
                         >
                           <Share className="w-4 h-4 mr-2" />
                           Tweet Your Win
@@ -718,7 +717,6 @@ export default function LandingPage() {
 
         {/* CTA Section */}
         <section className="py-20 bg-amber-500 relative overflow-hidden">
-          <div className="absolute inset-0 bg-black/10"></div>
           <motion.div
             className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative"
             initial={{ opacity: 0, y: 50 }}

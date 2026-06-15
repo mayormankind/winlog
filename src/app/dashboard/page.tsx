@@ -236,7 +236,7 @@ export default function Dashboard() {
 
           {/* Quick Actions */}
           <div className="space-y-6">
-            <Card className="border-0 shadow-lg rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950">
+            <Card className="border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-bold text-slate-900 dark:text-white">
                   Quick Actions
@@ -270,7 +270,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950">
+            <Card className="border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
                   <Star className="w-5 h-5 mr-2 text-emerald-600 dark:text-emerald-400" />

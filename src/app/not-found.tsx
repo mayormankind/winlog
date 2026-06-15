@@ -36,11 +36,11 @@ export default function NotFoundPage() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-purple-950 via-purple-900 to-amber-900 p-4">
+    <div className="fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center overflow-hidden bg-slate-900 p-4">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-amber-400/20 transition-all duration-1000 ease-out"
+          className="absolute inset-0 bg-amber-500/10 transition-all duration-1000 ease-out"
           style={{
             transform: `translate(${mousePosition.x * 0.02}px, ${
               mousePosition.y * 0.02
@@ -65,7 +65,7 @@ export default function NotFoundPage() {
         {/* Geometric Shapes */}
         <div className="absolute left-20 top-20 h-32 w-32 animate-spin-slow border border-purple-400/30" />
         <div className="absolute bottom-20 right-20 h-24 w-24 animate-bounce-slow border border-amber-400/30" />
-        <div className="absolute left-10 top-1/2 h-16 w-16 animate-pulse rounded-full bg-gradient-to-r from-purple-500/20 to-amber-500/20" />
+        <div className="absolute left-10 top-1/2 h-16 w-16 animate-pulse rounded-full bg-amber-500/20" />
       </div>
 
       {/* Main Content */}
@@ -73,7 +73,7 @@ export default function NotFoundPage() {
         <div className="space-y-8 p-6 text-center md:p-8">
           {/* Animated 404 */}
           <div className="relative">
-            <h1 className="bg-gradient-to-r from-purple-400 via-amber-400 to-purple-400 bg-clip-text text-7xl font-bold text-transparent animate-pulse sm:text-8xl md:text-9xl">
+            <h1 className="text-amber-500 text-7xl font-bold animate-pulse sm:text-8xl md:text-9xl">
               404
             </h1>
             <div className="absolute inset-0 animate-ping text-7xl font-bold text-purple-400/20 sm:text-8xl md:text-9xl">
@@ -84,7 +84,7 @@ export default function NotFoundPage() {
           {/* Title and Description */}
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-              <span className="bg-gradient-to-r from-purple-400 to-amber-400 bg-clip-text text-transparent">
+              <span className="text-amber-400">
                 Page Not Found
               </span>
             </h2>

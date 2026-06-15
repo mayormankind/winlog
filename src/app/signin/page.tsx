@@ -127,7 +127,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-blue-950 dark:to-purple-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center p-4">
       <Toaster position="top-center" richColors />
       {/* Theme Toggle */}
       <div className="absolute top-6 right-6 z-10">
@@ -166,10 +166,10 @@ export default function SignInPage() {
         <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-amber-500 rounded-2xl flex items-center justify-center">
                 <User className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold text-amber-500">
                 WinLog
               </span>
             </div>
@@ -273,7 +273,7 @@ export default function SignInPage() {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
                 >
                   {isLoading ? (
                     <>

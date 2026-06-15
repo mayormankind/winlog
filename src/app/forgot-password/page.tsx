@@ -83,10 +83,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-blue-950 dark:to-purple-950 flex items-center justify-center p-4">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800 bg-[size:20px_20px] opacity-20"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-green-500/10"></div>
+    <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center p-4">
 
       {/* Theme Toggle */}
       <motion.div
@@ -139,13 +136,13 @@ export default function ForgotPasswordPage() {
               variants={itemVariants}
             >
               <motion.div
-                className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center"
+                className="w-10 h-10 bg-amber-500 rounded-2xl flex items-center justify-center"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.5 }}
               >
                 <TrendingUp className="w-6 h-6 text-white" />
               </motion.div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold text-amber-500">
                 WinLog
               </span>
             </motion.div>
@@ -177,7 +174,7 @@ export default function ForgotPasswordPage() {
                   receive a password reset email shortly.
                 </p>
                 <Link href="/signin">
-                  <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl py-3 font-semibold">
+                  <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-3 font-semibold">
                     Back to Sign In
                   </Button>
                 </Link>
@@ -234,7 +231,7 @@ export default function ForgotPasswordPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
+                    className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
                   >
                     {isLoading ? (
                       <>
