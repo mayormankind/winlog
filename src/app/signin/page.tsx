@@ -19,7 +19,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { GoogleIcon } from "@/components/ui/google-icon";
 import { supabase } from "@/lib/supabaseClient";
 import { toast, Toaster } from "sonner";
 
@@ -34,7 +33,6 @@ type Errors = Partial<Record<keyof FormData, string>>;
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -42,6 +40,8 @@ export default function SignInPage() {
   });
   const [errors, setErrors] = useState<Errors>({});
   const router = useRouter();
+  const searchParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  const redirectTo = searchParams.get('redirect') || '/dashboard';
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,7 +84,7 @@ export default function SignInPage() {
       if (data.user) {
         toast.success("Signed in successfully!");
         setIsLoading(false);
-        router.push("/dashboard");
+        router.push(redirectTo);
       }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
@@ -92,29 +92,6 @@ export default function SignInPage() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setIsGoogleLoading(true);
-
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/dashboard`,
-        },
-      });
-
-      if (error) {
-        toast.error(
-          error.message || "Failed to sign in with Google. Please try again."
-        );
-        setIsGoogleLoading(false);
-        return;
-      }
-    } catch (error) {
-      toast.error("An unexpected error occurred with Google sign-in.");
-      setIsGoogleLoading(false);
-    }
-  };
 
   // Simplified animation variants
   const containerVariants = {
@@ -271,37 +248,6 @@ export default function SignInPage() {
                 </Button>
               </motion.div>
             </form>
-
-            {/* Divider */}
-            <div className="relative">
-              <Separator className="bg-slate-200" />
-              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 text-sm text-slate-500">
-                OR
-              </span>
-            </div>
-
-            {/* Google Sign In */}
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleGoogleSignIn}
-                disabled={isGoogleLoading}
-                className="w-full rounded-xl py-3 border-2 border-slate-200 hover:bg-slate-50 transition-all bg-transparent"
-              >
-                {isGoogleLoading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 mr-3 animate-spin" />
-                    Connecting...
-                  </>
-                ) : (
-                  <>
-                    <GoogleIcon className="w-5 h-5 mr-3" />
-                    Continue with Google
-                  </>
-                )}
-              </Button>
-            </motion.div>
 
             {/* Sign Up Link */}
             <div className="text-center">

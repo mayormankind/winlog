@@ -3,9 +3,8 @@
 import type React from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Key, Mail, Moon, Sun, User, ArrowLeft, Loader2 } from "lucide-react";
+import { Key, Mail, User, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
@@ -19,7 +18,6 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { GoogleIcon } from "@/components/ui/google-icon";
 import { supabase } from "@/lib/supabaseClient";
 import { toast, Toaster } from "sonner";
 
@@ -41,9 +39,7 @@ type FormData = z.infer<typeof signUpSchema>;
 type Errors = Partial<Record<keyof FormData, string>>;
 
 export default function SignUpPage() {
-  const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
@@ -111,32 +107,6 @@ export default function SignUpPage() {
     }
   };
 
-  const handleGoogleSignUp = async () => {
-    setIsGoogleLoading(true);
-
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/dashboard`,
-        },
-      });
-
-      if (error) {
-        toast.error(
-          error.message || "Failed to sign up with Google. Please try again."
-        );
-        setIsGoogleLoading(false);
-        return;
-      }
-      // toast.success(
-      //   "Account created successfully! A verification email has been sent."
-      // );
-    } catch (error) {
-      toast.error("An unexpected error occurred with Google signup.");
-      setIsGoogleLoading(false);
-    }
-  };
 
   // Simplified animation variants
   const containerVariants = {
@@ -148,28 +118,14 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center p-4 h-full">
-      {/* Theme Toggle */}
-      <div className="absolute top-6 right-6 z-10">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
-        >
-          <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </div>
-
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 h-full">
       {/* Back to Home */}
       <div className="absolute top-6 left-6 z-10">
         <Link href="/">
           <Button
             variant="ghost"
             size="sm"
-            className="rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
+            className="rounded-xl bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
@@ -183,7 +139,7 @@ export default function SignUpPage() {
         initial="hidden"
         animate="visible"
       >
-        <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+        <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 backdrop-blur-xl">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <div className="w-10 h-10 bg-primary rounded-2xl flex items-center justify-center">
@@ -193,10 +149,10 @@ export default function SignUpPage() {
                 WinLog
               </span>
             </div>
-            <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">
+            <CardTitle className="text-2xl font-bold text-slate-900">
               Create Account
             </CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-300">
+            <CardDescription className="text-slate-600">
               Start tracking your career wins today
             </CardDescription>
           </CardHeader>
@@ -207,7 +163,7 @@ export default function SignUpPage() {
               <div>
                 <Label
                   htmlFor="username"
-                  className="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                  className="text-sm font-semibold text-slate-700"
                 >
                   Username
                 </Label>
@@ -223,7 +179,7 @@ export default function SignUpPage() {
                     className={`rounded-xl border-2 transition-all ${
                       errors.username
                         ? "border-red-300 focus:border-red-500"
-                        : "border-slate-200 dark:border-slate-700 focus:border-primary"
+                        : "border-slate-200 focus:border-primary"
                     }`}
                   />
                 </div>
@@ -236,7 +192,7 @@ export default function SignUpPage() {
               <div>
                 <Label
                   htmlFor="email"
-                  className="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                  className="text-sm font-semibold text-slate-700"
                 >
                   Email
                 </Label>
@@ -252,7 +208,7 @@ export default function SignUpPage() {
                     className={`rounded-xl border-2 transition-all ${
                       errors.email
                         ? "border-red-300 focus:border-red-500"
-                        : "border-slate-200 dark:border-slate-700 focus:border-primary"
+                        : "border-slate-200 focus:border-primary"
                     }`}
                   />
                 </div>
@@ -265,7 +221,7 @@ export default function SignUpPage() {
               <div>
                 <Label
                   htmlFor="password"
-                  className="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                  className="text-sm font-semibold text-slate-700"
                 >
                   Password
                 </Label>
@@ -281,7 +237,7 @@ export default function SignUpPage() {
                     className={`pl-10 rounded-xl border-2 transition-all ${
                       errors.password
                         ? "border-red-300 focus:border-red-500"
-                        : "border-slate-200 dark:border-slate-700 focus:border-primary"
+                        : "border-slate-200 focus:border-primary"
                     }`}
                   />
                 </div>
@@ -312,44 +268,13 @@ export default function SignUpPage() {
               </motion.div>
             </form>
 
-            {/* Divider */}
-            <div className="relative">
-              <Separator className="bg-slate-200 dark:bg-slate-700" />
-              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 text-sm text-slate-500 dark:text-slate-400">
-                OR
-              </span>
-            </div>
-
-            {/* Google Sign Up */}
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleGoogleSignUp}
-                disabled={isGoogleLoading}
-                className="w-full rounded-xl py-3 border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all bg-transparent"
-              >
-                {isGoogleLoading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 mr-3 animate-spin" />
-                    Connecting...
-                  </>
-                ) : (
-                  <>
-                    <GoogleIcon className="w-5 h-5 mr-3" />
-                    Continue with Google
-                  </>
-                )}
-              </Button>
-            </motion.div>
-
             {/* Sign In Link */}
             <div className="text-center">
-              <p className="text-sm text-slate-600 dark:text-slate-300">
+              <p className="text-sm text-slate-600">
                 Already have an account?{" "}
                 <Link
                   href="/signin"
-                  className="font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80 transition-colors"
+                  className="font-semibold text-primary hover:text-primary/80 transition-colors"
                 >
                   Sign in
                 </Link>
@@ -359,18 +284,18 @@ export default function SignUpPage() {
         </Card>
 
         {/* Terms */}
-        <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
+        <p className="text-center text-xs text-slate-500 mt-6">
           By creating an account, you agree to our{" "}
           <Link
             href="/terms"
-            className="underline hover:text-slate-700 dark:hover:text-slate-300"
+            className="underline hover:text-slate-700"
           >
             Terms of Service
           </Link>{" "}
           and{" "}
           <Link
             href="/privacy"
-            className="underline hover:text-slate-700 dark:hover:text-slate-300"
+            className="underline hover:text-slate-700"
           >
             Privacy Policy
           </Link>

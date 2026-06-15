@@ -5,15 +5,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Mail,
-  Moon,
-  Sun,
   TrendingUp,
   ArrowLeft,
   Loader2,
   CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -29,7 +26,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { toast } from "sonner";
 
 export default function ForgotPasswordPage() {
-  const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [email, setEmail] = useState("");
@@ -83,26 +79,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center p-4">
-
-      {/* Theme Toggle */}
-      <motion.div
-        className="absolute top-6 right-6 z-10"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
-        >
-          <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </motion.div>
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
 
       {/* Back to Sign In */}
       <motion.div
@@ -115,7 +92,7 @@ export default function ForgotPasswordPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
+            className="rounded-xl bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Sign In
@@ -129,7 +106,7 @@ export default function ForgotPasswordPage() {
         initial="hidden"
         animate="visible"
       >
-        <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+        <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 backdrop-blur-xl">
           <CardHeader className="text-center pb-6">
             <motion.div
               className="flex items-center justify-center space-x-2 mb-4"
@@ -147,10 +124,10 @@ export default function ForgotPasswordPage() {
               </span>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              <CardTitle className="text-2xl font-bold text-slate-900 mb-2">
                 {isSuccess ? "Check Your Email" : "Reset Password"}
               </CardTitle>
-              <CardDescription className="text-slate-600 dark:text-slate-300">
+              <CardDescription className="text-slate-600">
                 {isSuccess
                   ? "We've sent a password reset link to your email"
                   : "Enter your email to receive a password reset link"}
@@ -166,10 +143,10 @@ export default function ForgotPasswordPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle className="w-8 h-8 text-primary" />
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
+                <p className="text-sm text-slate-600">
                   If an account with <strong>{email}</strong> exists, you'll
                   receive a password reset email shortly.
                 </p>
@@ -189,7 +166,7 @@ export default function ForgotPasswordPage() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="email"
-                    className="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                    className="text-sm font-semibold text-slate-700"
                   >
                     Email Address
                   </Label>
@@ -208,7 +185,7 @@ export default function ForgotPasswordPage() {
                       className={`pl-10 rounded-xl border-2 transition-all ${
                         error
                           ? "border-red-300 focus:border-red-500"
-                          : "border-slate-200 dark:border-slate-700 focus:border-primary"
+                          : "border-slate-200 focus:border-primary"
                       }`}
                     />
                   </div>
@@ -248,11 +225,11 @@ export default function ForgotPasswordPage() {
 
             {!isSuccess && (
               <motion.div className="text-center" variants={itemVariants}>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
+                <p className="text-sm text-slate-600">
                   Remember your password?{" "}
                   <Link
                     href="/signin"
-                    className="font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80 transition-colors"
+                    className="font-semibold text-primary hover:text-primary/80 transition-colors"
                   >
                     Sign in
                   </Link>

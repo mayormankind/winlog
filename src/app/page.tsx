@@ -48,13 +48,10 @@ export default function LandingPage() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (user) {
-        router.push("/dashboard");
-      }
       setUser(user);
     };
     checkUser();
-  }, [router]);
+  }, []);
 
   const handleAIEnhancement = async () => {
     if (!sampleAchievement.trim()) return;
