@@ -3,9 +3,8 @@
 import type React from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Key, Mail, Moon, Sun, User, ArrowLeft, Loader2 } from "lucide-react";
+import { Key, Mail, User, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
@@ -34,7 +33,6 @@ type FormData = z.infer<typeof signInSchema>;
 type Errors = Partial<Record<keyof FormData, string>>;
 
 export default function SignInPage() {
-  const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -85,6 +83,7 @@ export default function SignInPage() {
 
       if (data.user) {
         toast.success("Signed in successfully!");
+        setIsLoading(false);
         router.push("/dashboard");
       }
     } catch (error) {
@@ -127,29 +126,15 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Toaster position="top-center" richColors />
-      {/* Theme Toggle */}
-      <div className="absolute top-6 right-6 z-10">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
-        >
-          <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </div>
-
       {/* Back to Home */}
       <div className="absolute top-6 left-6 z-10">
         <Link href="/">
           <Button
             variant="ghost"
             size="sm"
-            className="rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
+            className="rounded-xl bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
@@ -163,7 +148,7 @@ export default function SignInPage() {
         initial="hidden"
         animate="visible"
       >
-        <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+        <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 backdrop-blur-xl">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <div className="w-10 h-10 bg-primary rounded-2xl flex items-center justify-center">
@@ -173,10 +158,10 @@ export default function SignInPage() {
                 WinLog
               </span>
             </div>
-            <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">
+            <CardTitle className="text-2xl font-bold text-foreground">
               Welcome Back
             </CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-300">
+            <CardDescription className="text-muted-foreground">
               Sign in to continue tracking your wins
             </CardDescription>
           </CardHeader>
@@ -187,7 +172,7 @@ export default function SignInPage() {
               <div>
                 <Label
                   htmlFor="email"
-                  className="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                  className="text-sm font-semibold text-slate-700"
                 >
                   Email
                 </Label>
@@ -203,7 +188,7 @@ export default function SignInPage() {
                     className={`rounded-xl border-2 transition-all ${
                       errors.email
                         ? "border-red-300 focus:border-red-500"
-                        : "border-slate-200 dark:border-slate-700 focus:border-primary"
+                        : "border-slate-200 focus:border-primary"
                     }`}
                   />
                 </div>
@@ -217,7 +202,7 @@ export default function SignInPage() {
                 <div className="flex flex-col">
                   <Label
                     htmlFor="password"
-                    className="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                    className="text-sm font-semibold text-slate-700"
                   >
                     Password
                   </Label>
@@ -232,12 +217,12 @@ export default function SignInPage() {
                     className={`rounded-xl border-2 transition-all ${
                       errors.password
                         ? "border-red-300 focus:border-red-500"
-                        : "border-slate-200 dark:border-slate-700 focus:border-primary"
+                        : "border-slate-200 focus:border-primary"
                     }`}
                   />
                   <Link
                     href="/forgot-password"
-                    className="text-sm text-right text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80 transition-colors"
+                    className="text-sm text-right text-primary hover:text-primary/80 transition-colors"
                   >
                     Forgot password?
                   </Link>
@@ -255,11 +240,11 @@ export default function SignInPage() {
                   onCheckedChange={(checked: any) =>
                     setRememberMe(checked as boolean)
                   }
-                  className="rounded border-slate-300 dark:border-slate-600"
+                  className="rounded border-slate-300"
                 />
                 <Label
                   htmlFor="remember"
-                  className="text-sm text-slate-600 dark:text-slate-300 cursor-pointer select-none"
+                  className="text-sm text-muted-foreground cursor-pointer select-none"
                 >
                   Remember me for 30 days
                 </Label>
@@ -289,8 +274,8 @@ export default function SignInPage() {
 
             {/* Divider */}
             <div className="relative">
-              <Separator className="bg-slate-200 dark:bg-slate-700" />
-              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 text-sm text-slate-500 dark:text-slate-400">
+              <Separator className="bg-slate-200" />
+              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 text-sm text-slate-500">
                 OR
               </span>
             </div>
@@ -302,7 +287,7 @@ export default function SignInPage() {
                 variant="outline"
                 onClick={handleGoogleSignIn}
                 disabled={isGoogleLoading}
-                className="w-full rounded-xl py-3 border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all bg-transparent"
+                className="w-full rounded-xl py-3 border-2 border-slate-200 hover:bg-slate-50 transition-all bg-transparent"
               >
                 {isGoogleLoading ? (
                   <>
@@ -320,11 +305,11 @@ export default function SignInPage() {
 
             {/* Sign Up Link */}
             <div className="text-center">
-              <p className="text-sm text-slate-600 dark:text-slate-300">
+              <p className="text-sm text-slate-600">
                 Don't have an account?{" "}
                 <Link
                   href="/signup"
-                  className="font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80 transition-colors"
+                  className="font-semibold text-primary hover:text-primary/80 transition-colors"
                 >
                   Sign up
                 </Link>
@@ -334,11 +319,11 @@ export default function SignInPage() {
         </Card>
 
         {/* Help */}
-        <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
+        <p className="text-center text-xs text-slate-500 mt-6">
           Need help?{" "}
           <Link
             href="/support"
-            className="underline hover:text-slate-700 dark:hover:text-slate-300"
+            className="underline hover:text-slate-700"
           >
             Contact Support
           </Link>

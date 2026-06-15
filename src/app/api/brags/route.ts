@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     }
 
     const { data, error } = await supabase
-      .from("brag_entries")
+      .from("achievements")
       .insert([{ user_id, title, description, impact, proof_urls }]);
 
     if (error) {

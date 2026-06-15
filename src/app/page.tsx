@@ -18,8 +18,6 @@ import {
   FileText,
   TrendingUp,
   Star,
-  Sun,
-  Moon,
   Sparkles,
   Brain,
   Download,
@@ -30,7 +28,6 @@ import {
   Rocket,
 } from "lucide-react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -39,7 +36,6 @@ import { User } from "@supabase/supabase-js";
 import EnhancementModal from "@/components/modal/enhancement-modal";
 
 export default function LandingPage() {
-  const { theme, setTheme } = useTheme();
   const [sampleAchievement, setSampleAchievement] = useState("");
   const [enhancedAchievement, setEnhancedAchievement] = useState("");
   const [isEnhancing, setIsEnhancing] = useState(false);
@@ -130,12 +126,12 @@ export default function LandingPage() {
         <meta property="og:type" content="website" />
       </Head>
 
-      <div className="min-h-screen bg-white dark:bg-slate-900">
+      <div className="min-h-screen bg-background">
         {/* Header */}
         <motion.header
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="border-b bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50"
+          className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50"
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
@@ -151,34 +147,39 @@ export default function LandingPage() {
                 </span>
               </motion.div>
               <div className="flex items-center space-x-4">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="rounded-xl"
-                >
-                  <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                  <span className="sr-only">Toggle theme</span>
-                </Button>
-                <Link href="/signin">
-                  <Button
-                    variant="ghost"
-                    className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
-                  >
-                    Sign In
-                  </Button>
-                </Link>
-                <Link href="/signup">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl">
-                      Sign Up
-                    </Button>
-                  </motion.div>
-                </Link>
+                {user ? (
+                  <Link href="/dashboard">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl">
+                        Dashboard
+                      </Button>
+                    </motion.div>
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/signin">
+                      <Button
+                        variant="ghost"
+                        className="text-foreground hover:text-primary"
+                      >
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link href="/signup">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl">
+                          Sign Up
+                        </Button>
+                      </motion.div>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -198,14 +199,14 @@ export default function LandingPage() {
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
               >
-                <Badge className="mb-6 bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border-primary/20 dark:border-primary/30 px-4 py-2">
+                <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 px-4 py-2">
                   <Sparkles className="w-4 h-4 mr-2" />
                   Track Your Wins, Build Your Future
                 </Badge>
               </motion.div>
 
               <motion.h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
@@ -218,7 +219,7 @@ export default function LandingPage() {
               </motion.h1>
 
               <motion.p
-                className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+                className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
@@ -254,7 +255,7 @@ export default function LandingPage() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="rounded-2xl px-8 py-4 font-semibold border-slate-300 dark:border-slate-600 bg-transparent w-full"
+                    className="rounded-2xl px-8 py-4 font-semibold border-border bg-transparent w-full"
                   >
                     View Demo
                   </Button>
@@ -265,7 +266,7 @@ export default function LandingPage() {
         </section>
 
         {/* How It Works */}
-        <section className="py-20 bg-white dark:bg-slate-900">
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-16"
@@ -273,10 +274,10 @@ export default function LandingPage() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
                 How it works
               </h2>
-              <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Four simple steps to build your AI-enhanced professional brag
                 document
               </p>
@@ -290,17 +291,17 @@ export default function LandingPage() {
               viewport={{ once: true }}
             >
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow min-h-80 gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 hover:shadow-xl transition-shadow min-h-80 gap-1 h-full">
                   <CardHeader className="pb-4">
                     <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <FileText className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                    <CardTitle className="text-xl font-bold text-foreground">
                       1. Log Your Wins
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base text-slate-600 dark:text-slate-300">
+                    <CardDescription className="text-base text-muted-foreground">
                       Turn "Optimized database" into a detailed entry with
                       specific metrics, timelines, and business impact.
                     </CardDescription>
@@ -309,17 +310,17 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
                     <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <CheckCircle className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                    <CardTitle className="text-xl font-bold text-foreground">
                       2. Review & Organize
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base text-slate-600 dark:text-slate-300">
+                    <CardDescription className="text-base text-muted-foreground">
                       Organize achievements by impact, date, or category. Keep
                       everything searchable and accessible for quick retrieval.
                     </CardDescription>
@@ -328,17 +329,17 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
                     <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <TrendingUp className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                    <CardTitle className="text-xl font-bold text-foreground">
                       3. Promote Yourself
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base text-slate-600 dark:text-slate-300">
+                    <CardDescription className="text-base text-muted-foreground">
                       Use documented wins for performance reviews, interviews,
                       and career advancement conversations.
                     </CardDescription>
@@ -347,17 +348,17 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
                     <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <Brain className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                    <CardTitle className="text-xl font-bold text-foreground">
                       4. Powered by AI
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base text-slate-600 dark:text-slate-300">
+                    <CardDescription className="text-base text-muted-foreground">
                       Our xAI integration refines achievements into compelling
                       narratives with quantified impact and professional
                       language.
@@ -370,7 +371,7 @@ export default function LandingPage() {
         </section>
 
         {/* Benefits with Stats and Testimonials */}
-        <section className="py-20 bg-gray-50 dark:bg-slate-800">
+        <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-16"
@@ -378,23 +379,23 @@ export default function LandingPage() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
                 Why professionals choose WinLog
               </h2>
-              <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
                 Stop underselling yourself. Start documenting your impact with
                 AI-powered insights.
               </p>
 
               {/* Key Stat */}
               <motion.div
-                className="inline-block bg-primary/10 dark:bg-primary/20 rounded-2xl p-6 mb-12"
+                className="inline-block bg-primary/10 rounded-2xl p-6 mb-12"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="text-3xl font-bold text-primary dark:text-primary mb-2">
+                <div className="text-3xl font-bold text-primary mb-2">
                   90%
                 </div>
-                <div className="text-sm text-primary/80 dark:text-primary/70">
+                <div className="text-sm text-primary/80">
                   of professionals forget key achievements by year-end
                 </div>
               </motion.div>
@@ -411,14 +412,14 @@ export default function LandingPage() {
                 className="flex items-start space-x-4"
                 variants={itemVariants}
               >
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     No More Forgotten Wins
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300">
+                  <p className="text-muted-foreground">
                     Capture achievements as they happen, so you never forget
                     your impact when review time comes.
                   </p>
@@ -429,14 +430,14 @@ export default function LandingPage() {
                 className="flex items-start space-x-4"
                 variants={itemVariants}
               >
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Brain className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Brain className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     AI-Enhanced Impact
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300">
+                  <p className="text-muted-foreground">
                     Transform basic achievements into compelling narratives with
                     quantified business impact using xAI.
                   </p>
@@ -447,14 +448,14 @@ export default function LandingPage() {
                 className="flex items-start space-x-4"
                 variants={itemVariants}
               >
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Download className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Download className="w-6 h-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     PDF Export Ready
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300">
+                  <p className="text-muted-foreground">
                     Export your wins as polished PDFs perfect for performance
                     reviews and job applications.
                   </p>
@@ -465,14 +466,14 @@ export default function LandingPage() {
                 className="flex items-start space-x-4"
                 variants={itemVariants}
               >
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Award className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Award className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     Career Advancement
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300">
+                  <p className="text-muted-foreground">
                     Build compelling cases for promotions, raises, and new
                     opportunities with data-driven achievements.
                   </p>
@@ -487,7 +488,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-900">
+              <Card className="border-0 shadow-lg rounded-2xl bg-white">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     <div className="flex text-yellow-400">
@@ -496,7 +497,7 @@ export default function LandingPage() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-300 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     "WinLog helped me ace my performance review! The AI
                     enhancement turned my basic notes into compelling
                     achievement stories."
@@ -506,10 +507,10 @@ export default function LandingPage() {
                       SK
                     </div>
                     <div className="ml-3">
-                      <div className="font-semibold text-slate-900 dark:text-white">
+                      <div className="font-semibold text-foreground">
                         Sarah K.
                       </div>
-                      <div className="text-sm text-slate-500 dark:text-slate-400">
+                      <div className="text-sm text-slate-500">
                         Software Engineer
                       </div>
                     </div>
@@ -517,7 +518,7 @@ export default function LandingPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-lg rounded-2xl bg-white dark:bg-slate-900">
+              <Card className="border-0 shadow-lg rounded-2xl bg-white">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     <div className="flex text-yellow-400">
@@ -526,7 +527,7 @@ export default function LandingPage() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-300 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     "The PDF export feature is a game-changer. I now have a
                     professional document ready for any opportunity."
                   </p>
@@ -535,10 +536,10 @@ export default function LandingPage() {
                       MR
                     </div>
                     <div className="ml-3">
-                      <div className="font-semibold text-slate-900 dark:text-white">
+                      <div className="font-semibold text-foreground">
                         Mike R.
                       </div>
-                      <div className="text-sm text-slate-500 dark:text-slate-400">
+                      <div className="text-sm text-slate-500">
                         Product Manager
                       </div>
                     </div>
@@ -550,7 +551,7 @@ export default function LandingPage() {
         </section>
 
         {/* See It in Action with Interactive Demo */}
-        <section id="demo" className="py-20 bg-white dark:bg-slate-900">
+        <section id="demo" className="py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-16"
@@ -558,10 +559,10 @@ export default function LandingPage() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
                 See it in action
               </h2>
-              <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Try our AI enhancement and see how WinLog transforms your
                 achievements
               </p>
@@ -574,9 +575,9 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <Card className="border-0 shadow-xl rounded-2xl bg-primary/5 dark:bg-primary/10">
+                <Card className="border-0 shadow-xl rounded-2xl bg-primary/5">
                   <CardHeader>
-                    <CardTitle className="flex items-center text-xl font-bold text-slate-900 dark:text-white">
+                    <CardTitle className="flex items-center text-xl font-bold text-foreground">
                       <Zap className="w-5 h-5 mr-2 text-primary" />
                       Try AI Enhancement
                     </CardTitle>
@@ -626,12 +627,12 @@ export default function LandingPage() {
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="p-4 bg-green-50 dark:bg-green-950 rounded-xl border border-green-200 dark:border-green-800"
+                        className="p-4 bg-green-50 rounded-xl border border-green-200"
                       >
-                        <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">
+                        <h4 className="font-semibold text-green-800 mb-2">
                           AI Enhanced Result:
                         </h4>
-                        <p className="text-sm text-green-700 dark:text-green-300">
+                        <p className="text-sm text-green-700">
                           {enhancedAchievement}
                         </p>
                       </motion.div>
@@ -663,27 +664,27 @@ export default function LandingPage() {
                   <CardContent className="p-6">
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                        <h4 className="font-semibold text-foreground mb-2">
                           What I did:
                         </h4>
-                        <p className="text-slate-600 dark:text-slate-300">
+                        <p className="text-muted-foreground">
                           Identified and optimized database queries in our user
                           authentication service, implemented Redis caching, and
                           refactored the API endpoints.
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                        <h4 className="font-semibold text-foreground mb-2">
                           Impact:
                         </h4>
-                        <p className="text-slate-600 dark:text-slate-300">
+                        <p className="text-muted-foreground">
                           Reduced average API response time from 2.4s to 600ms,
                           improving user experience for 50,000+ daily active
                           users and reducing server costs by $800/month.
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                        <h4 className="font-semibold text-foreground mb-2">
                           Proof:
                         </h4>
                         <div className="flex gap-2 mb-4">
@@ -771,7 +772,7 @@ export default function LandingPage() {
                   }
                   variant="outline"
                   size="sm"
-                  className="border-slate-600 text-gray-600 dark:text-slate-300 hover:bg-slate-800"
+                  className="border-slate-600 text-gray-600 hover:bg-slate-100"
                 >
                   <Share className="w-4 h-4 mr-2" />
                   Share WinLog
