@@ -1,6 +1,20 @@
 -- WinLog Database Schema
 -- Run this in your Supabase SQL Editor
 
+-- Create users table to store additional user profile data
+CREATE TABLE IF NOT EXISTS users (
+  id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
+  username TEXT UNIQUE,
+  email TEXT NOT NULL,
+  first_name TEXT,
+  last_name TEXT,
+  job_title TEXT,
+  company TEXT,
+  avatar_url TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Create achievements table (main table for storing user achievements)
 CREATE TABLE IF NOT EXISTS achievements (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -31,8 +45,22 @@ CREATE TABLE IF NOT EXISTS brag_entries (
 );
 
 -- Enable Row Level Security
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE achievements ENABLE ROW LEVEL SECURITY;
 ALTER TABLE brag_entries ENABLE ROW LEVEL SECURITY;
+
+-- Create policies for users table
+CREATE POLICY "Users can view own profile"
+  ON users FOR SELECT
+  USING (auth.uid() = id);
+
+CREATE POLICY "Users can update own profile"
+  ON users FOR UPDATE
+  USING (auth.uid() = id);
+
+CREATE POLICY "Users can insert own profile"
+  ON users FOR INSERT
+  WITH CHECK (auth.uid() = id);
 
 -- Create policies for achievements table
 -- Users can only see their own achievements
@@ -73,6 +101,8 @@ CREATE POLICY "Users can delete own brag_entries"
   USING (auth.uid() = user_id);
 
 -- Create indexes for better performance
+CREATE INDEX IF NOT EXISTS idx_users_id ON users(id);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_achievements_user_id ON achievements(user_id);
 CREATE INDEX IF NOT EXISTS idx_achievements_date ON achievements(date DESC);
 CREATE INDEX IF NOT EXISTS idx_brag_entries_user_id ON brag_entries(user_id);
@@ -88,6 +118,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Triggers to auto-update updated_at
+CREATE TRIGGER update_users_updated_at
+  BEFORE UPDATE ON users
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
 CREATE TRIGGER update_achievements_updated_at
   BEFORE UPDATE ON achievements
   FOR EACH ROW
@@ -97,3 +132,23 @@ CREATE TRIGGER update_brag_entries_updated_at
   BEFORE UPDATE ON brag_entries
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
+
+-- Function to create user profile on signup
+CREATE OR REPLACE FUNCTION handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO users (id, email, username)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'username', split_part(NEW.email, '@', 1))
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Trigger to create user profile on signup
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW
+  EXECUTE FUNCTION handle_new_user();

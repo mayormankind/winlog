@@ -4,8 +4,8 @@ import { supabase } from "@/lib/supabaseClient";
 
 interface User {
   id: string;
-  username: string;
   email: string;
+  username?: string;
   first_name?: string;
   last_name?: string;
   job_title?: string;
@@ -34,13 +34,27 @@ export const useUserStore = create<UserState>()(
             data: { user: authUser },
           } = await supabase.auth.getUser();
           if (authUser) {
-            const { data, error } = await supabase
+            // Try to get user profile from users table
+            const { data: profile, error } = await supabase
               .from("users")
               .select("*")
               .eq("id", authUser.id)
               .single();
-            if (error) throw error;
-            set({ user: data, isLoading: false });
+            
+            if (profile) {
+              set({ user: profile, isLoading: false });
+            } else {
+              // Fallback to auth user if profile doesn't exist yet
+              const user: User = {
+                id: authUser.id,
+                email: authUser.email || "",
+                username: authUser.user_metadata?.username || authUser.email?.split('@')[0],
+                first_name: authUser.user_metadata?.first_name,
+                last_name: authUser.user_metadata?.last_name,
+                avatar_url: authUser.user_metadata?.avatar_url,
+              };
+              set({ user, isLoading: false });
+            }
           } else {
             set({ user: null, isLoading: false, error: "No user found" });
           }

@@ -29,13 +29,10 @@ import {
   Settings,
   User,
   LogOut,
-  Moon,
-  Sun,
   TrendingUp,
   Bell,
 } from "lucide-react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 import { supabase } from "@/lib/supabaseClient";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -57,13 +54,13 @@ function AppSidebar() {
   } = useUserStore();
 
   return (
-    <Sidebar className="border-r border-slate-200 dark:border-slate-800">
-      <SidebarHeader className="border-b border-slate-200 dark:border-slate-800 p-4">
+    <Sidebar className="border-r border-slate-200">
+      <SidebarHeader className="border-b border-slate-200 p-4">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
             <TrendingUp className="w-5 h-5 text-primary-foreground" />
           </div>
-          <span className="text-xl font-bold text-slate-900 dark:text-white">
+          <span className="text-xl font-bold text-slate-900">
             WinLog
           </span>
         </div>
@@ -75,14 +72,14 @@ function AppSidebar() {
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton
                 asChild
-                className="w-full justify-start rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="w-full justify-start rounded-xl hover:bg-slate-100"
               >
                 <Link
                   href={item.href}
                   className="flex items-center space-x-3 px-3 py-2"
                 >
-                  <item.icon className="w-5 h-5 text-slate-600 dark:text-slate-400" />
-                  <span className="text-slate-700 dark:text-slate-300 font-medium">
+                  <item.icon className="w-5 h-5 text-slate-600" />
+                  <span className="text-slate-700 font-medium">
                     {item.name}
                   </span>
                 </Link>
@@ -92,7 +89,7 @@ function AppSidebar() {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-slate-200 dark:border-slate-800 p-4">
+      <SidebarFooter className="border-t border-slate-200 p-4">
         <div className="flex items-center space-x-3">
           <Avatar className="w-8 h-8">
             <AvatarImage src="/placeholder.svg?height=32&width=32" />
@@ -101,12 +98,12 @@ function AppSidebar() {
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-900 dark:text-white truncate">
+            <p className="text-sm font-medium text-slate-900 truncate">
               {user?.first_name
                 ? `${user.first_name}${user.last_name ? ` ${user.last_name}` : ""}`
                 : user?.username ?? ""}
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+            <p className="text-xs text-slate-500 truncate">
               {user?.email || ""}
             </p>
           </div>
@@ -117,7 +114,6 @@ function AppSidebar() {
 }
 
 function TopBar() {
-  const { theme, setTheme } = useTheme();
   const {
     user,
     isLoading: userLoading,
@@ -136,27 +132,16 @@ function TopBar() {
   };
 
   return (
-    <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+    <header className="border-b border-slate-200 bg-white">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center space-x-4">
           <SidebarTrigger className="lg:hidden" />
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-slate-900">
             Dashboard
           </h1>
         </div>
 
         <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-xl"
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-
           <Button variant="ghost" size="icon" className="rounded-xl">
             <Bell className="h-5 w-5" />
           </Button>
@@ -229,7 +214,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen flex w-full bg-slate-50">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
           <TopBar />
