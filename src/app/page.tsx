@@ -35,6 +35,7 @@ import Head from "next/head";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import { User } from "@supabase/supabase-js";
 import EnhancementModal from "@/components/modal/enhancement-modal";
 
 export default function LandingPage() {
@@ -43,7 +44,7 @@ export default function LandingPage() {
   const [enhancedAchievement, setEnhancedAchievement] = useState("");
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [enhancingModal, setEnhancingModal] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
