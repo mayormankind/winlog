@@ -42,7 +42,7 @@ const config: Config = {
   			},
   			border: '#0B2B26',
   			input: '#0B2B26',
-  			ring: '#235347',
+  			ring: '#163832',
   			brand: {
   				darkest: '#051F20',
   				dark: '#0B2B26',
