@@ -162,10 +162,10 @@ function BragForm() {
       </div>
 
       {/* Tips Card */}
-      <Card className="border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20">
+      <Card className="border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
-            <Lightbulb className="w-5 h-5 mr-2 text-amber-500" />
+            <Lightbulb className="w-5 h-5 mr-2 text-primary" />
             Pro Tips for Great Brags
           </CardTitle>
         </CardHeader>
@@ -189,7 +189,7 @@ function BragForm() {
       </Card>
 
       {/* Main Form */}
-      <Card className="border-0 shadow-lg rounded-2xl bg-indigo-50 dark:bg-slate-800">
+      <Card className="border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-slate-800">
         <CardHeader className="pb-6">
           <CardTitle className="text-xl font-bold text-slate-900 dark:text-white flex items-center">
             <FileText className="w-5 h-5 mr-2" />
@@ -375,13 +375,13 @@ function BragForm() {
               {selectedTags.map((tag) => (
                 <Badge
                   key={tag}
-                  className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200"
+                  className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary"
                 >
                   {tag}
                   <button
                     type="button"
                     onClick={() => removeTag(tag)}
-                    className="ml-2 hover:text-indigo-600"
+                    className="ml-2 hover:text-primary/80"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -401,7 +401,7 @@ function BragForm() {
             <Button
               type="button"
               onClick={addCustomTag}
-              className="rounded-xl bg-indigo-600 hover:bg-indigo-700"
+              className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               <Plus className="w-4 h-4" />
             </Button>
@@ -419,7 +419,7 @@ function BragForm() {
         <Button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl"
         >
           {isLoading ? (
             <>

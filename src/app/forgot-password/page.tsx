@@ -136,13 +136,13 @@ export default function ForgotPasswordPage() {
               variants={itemVariants}
             >
               <motion.div
-                className="w-10 h-10 bg-amber-500 rounded-2xl flex items-center justify-center"
+                className="w-10 h-10 bg-primary rounded-2xl flex items-center justify-center"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.5 }}
               >
-                <TrendingUp className="w-6 h-6 text-white" />
+                <TrendingUp className="w-6 h-6 text-primary-foreground" />
               </motion.div>
-              <span className="text-2xl font-bold text-amber-500">
+              <span className="text-2xl font-bold text-primary">
                 WinLog
               </span>
             </motion.div>
@@ -166,15 +166,15 @@ export default function ForgotPasswordPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto">
-                  <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
+                <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle className="w-8 h-8 text-primary" />
                 </div>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
                   If an account with <strong>{email}</strong> exists, you'll
                   receive a password reset email shortly.
                 </p>
                 <Link href="/signin">
-                  <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-3 font-semibold">
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl py-3 font-semibold">
                     Back to Sign In
                   </Button>
                 </Link>
@@ -208,7 +208,7 @@ export default function ForgotPasswordPage() {
                       className={`pl-10 rounded-xl border-2 transition-all ${
                         error
                           ? "border-red-300 focus:border-red-500"
-                          : "border-slate-200 dark:border-slate-700 focus:border-purple-500"
+                          : "border-slate-200 dark:border-slate-700 focus:border-primary"
                       }`}
                     />
                   </div>
@@ -231,7 +231,7 @@ export default function ForgotPasswordPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
                   >
                     {isLoading ? (
                       <>
@@ -252,7 +252,7 @@ export default function ForgotPasswordPage() {
                   Remember your password?{" "}
                   <Link
                     href="/signin"
-                    className="font-semibold text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors"
+                    className="font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80 transition-colors"
                   >
                     Sign in
                   </Link>

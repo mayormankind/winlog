@@ -166,10 +166,10 @@ export default function SignInPage() {
         <Card className="border-0 shadow-2xl rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-amber-500 rounded-2xl flex items-center justify-center">
-                <User className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-primary rounded-2xl flex items-center justify-center">
+                <User className="w-6 h-6 text-primary-foreground" />
               </div>
-              <span className="text-2xl font-bold text-amber-500">
+              <span className="text-2xl font-bold text-primary">
                 WinLog
               </span>
             </div>
@@ -203,7 +203,7 @@ export default function SignInPage() {
                     className={`rounded-xl border-2 transition-all ${
                       errors.email
                         ? "border-red-300 focus:border-red-500"
-                        : "border-slate-200 dark:border-slate-700 focus:border-purple-500"
+                        : "border-slate-200 dark:border-slate-700 focus:border-primary"
                     }`}
                   />
                 </div>
@@ -232,12 +232,12 @@ export default function SignInPage() {
                     className={`rounded-xl border-2 transition-all ${
                       errors.password
                         ? "border-red-300 focus:border-red-500"
-                        : "border-slate-200 dark:border-slate-700 focus:border-purple-500"
+                        : "border-slate-200 dark:border-slate-700 focus:border-primary"
                     }`}
                   />
                   <Link
                     href="/forgot-password"
-                    className="text-sm text-right text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors"
+                    className="text-sm text-right text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80 transition-colors"
                   >
                     Forgot password?
                   </Link>
@@ -273,7 +273,7 @@ export default function SignInPage() {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all"
                 >
                   {isLoading ? (
                     <>
@@ -324,7 +324,7 @@ export default function SignInPage() {
                 Don't have an account?{" "}
                 <Link
                   href="/signup"
-                  className="font-semibold text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors"
+                  className="font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80 transition-colors"
                 >
                   Sign up
                 </Link>

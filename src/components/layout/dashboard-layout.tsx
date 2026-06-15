@@ -60,8 +60,8 @@ function AppSidebar() {
     <Sidebar className="border-r border-slate-200 dark:border-slate-800">
       <SidebarHeader className="border-b border-slate-200 dark:border-slate-800 p-4">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-amber-500 rounded-xl flex items-center justify-center">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
+            <TrendingUp className="w-5 h-5 text-primary-foreground" />
           </div>
           <span className="text-xl font-bold text-slate-900 dark:text-white">
             WinLog
@@ -96,7 +96,7 @@ function AppSidebar() {
         <div className="flex items-center space-x-3">
           <Avatar className="w-8 h-8">
             <AvatarImage src="/placeholder.svg?height=32&width=32" />
-            <AvatarFallback className="bg-amber-100 text-amber-700 text-sm font-semibold">
+            <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
               {user?.first_name?.[0] ?? user?.username?.[0] ?? "?"}
             </AvatarFallback>
           </Avatar>
@@ -172,7 +172,7 @@ function TopBar() {
                         : "/placeholder.svg?height=40&width=40"
                     } `}
                   />
-                  <AvatarFallback className="bg-amber-100 text-amber-700 font-semibold">
+                  <AvatarFallback className="bg-primary/10 text-primary font-semibold">
                     {user?.first_name?.[0] ?? user?.username?.[0] ?? "?"}
                   </AvatarFallback>
                 </Avatar>

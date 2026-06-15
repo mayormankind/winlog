@@ -56,7 +56,7 @@ export default function Dashboard() {
       <DashboardLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
             <p className="mt-4 text-slate-600 dark:text-slate-300">
               Loading...
             </p>
@@ -76,7 +76,7 @@ export default function Dashboard() {
                 Please sign in to view your dashboard.
               </p>
               <Link href="/signin">
-                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl">
                   Sign In
                 </Button>
               </Link>
@@ -102,7 +102,7 @@ export default function Dashboard() {
             </p>
           </div>
           <Link href="/brags/new">
-            <Button className="mt-4 sm:mt-0 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl">
+            <Button className="mt-4 sm:mt-0 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl">
               <Plus className="w-4 h-4 mr-2" />
               Add New Brag
             </Button>
@@ -117,28 +117,28 @@ export default function Dashboard() {
               value: stats.totalBrags.toString(),
               change: "+3 this month",
               icon: FileText,
-              color: "text-indigo-600 dark:text-indigo-400",
+              color: "text-primary dark:text-primary",
             },
             {
               title: "Impact Score",
               value: stats.impactScore,
               change: "+0.5 from last month",
               icon: TrendingUp,
-              color: "text-emerald-600 dark:text-emerald-400",
+              color: "text-primary/80 dark:text-primary/80",
             },
             {
               title: "Categories",
               value: stats.categories,
               change: "Technical, Leadership, etc.",
               icon: Target,
-              color: "text-purple-600 dark:text-purple-400",
+              color: "text-primary/70 dark:text-primary/70",
             },
             {
               title: "This Quarter",
               value: stats.thisQuarter.toString(),
               change: "Strong performance period",
               icon: Award,
-              color: "text-orange-600 dark:text-orange-400",
+              color: "text-primary/60 dark:text-primary/60",
             },
           ].map((stat, index) => (
             <Card
@@ -236,7 +236,7 @@ export default function Dashboard() {
 
           {/* Quick Actions */}
           <div className="space-y-6">
-            <Card className="border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20">
+            <Card className="border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-bold text-slate-900 dark:text-white">
                   Quick Actions
@@ -244,7 +244,7 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <Link href="/brags/new">
-                  <Button className="w-full justify-start rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white">
+                  <Button className="w-full justify-start rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground">
                     <Plus className="w-4 h-4 mr-2" />
                     Add New Brag
                   </Button>
@@ -270,10 +270,10 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20">
+            <Card className="border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
-                  <Star className="w-5 h-5 mr-2 text-emerald-600 dark:text-emerald-400" />
+                  <Star className="w-5 h-5 mr-2 text-primary" />
                   Pro Tip
                 </CardTitle>
               </CardHeader>

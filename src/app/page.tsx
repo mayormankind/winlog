@@ -142,10 +142,10 @@ export default function LandingPage() {
                 className="flex items-center space-x-2"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="w-8 h-8 bg-amber-500 rounded-xl flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold text-amber-500">
+                <span className="text-xl font-bold text-primary">
                   WinLog
                 </span>
               </motion.div>
@@ -173,7 +173,7 @@ export default function LandingPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl">
+                    <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl">
                       Sign Up
                     </Button>
                   </motion.div>
@@ -197,7 +197,7 @@ export default function LandingPage() {
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
               >
-                <Badge className="mb-6 bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800 px-4 py-2">
+                <Badge className="mb-6 bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border-primary/20 dark:border-primary/30 px-4 py-2">
                   <Sparkles className="w-4 h-4 mr-2" />
                   Track Your Wins, Build Your Future
                 </Badge>
@@ -210,7 +210,7 @@ export default function LandingPage() {
                 transition={{ delay: 0.4 }}
               >
                 Never forget your{" "}
-                <span className="text-amber-500">
+                <span className="text-primary">
                   achievements
                 </span>{" "}
                 again
@@ -241,7 +241,7 @@ export default function LandingPage() {
                   >
                     <Button
                       size="lg"
-                      className="bg-amber-500 hover:bg-amber-600 text-white rounded-2xl px-8 py-4 font-semibold shadow-lg hover:shadow-xl transition-all w-full"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl px-8 py-4 font-semibold shadow-lg hover:shadow-xl transition-all w-full"
                     >
                       Start Logging Wins
                       <ArrowRight className="ml-2 w-5 h-5" />
@@ -289,10 +289,10 @@ export default function LandingPage() {
               viewport={{ once: true }}
             >
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow min-h-80 gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow min-h-80 gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <FileText className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <FileText className="w-8 h-8 text-primary-foreground" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
                       1. Log Your Wins
@@ -308,10 +308,10 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle className="w-8 h-8 text-primary-foreground" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
                       2. Review & Organize
@@ -327,10 +327,10 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <TrendingUp className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <TrendingUp className="w-8 h-8 text-primary-foreground" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
                       3. Promote Yourself
@@ -346,10 +346,10 @@ export default function LandingPage() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <Card className="text-center border-0 shadow-lg rounded-2xl bg-amber-50 dark:bg-amber-950/20 hover:shadow-xl transition-shadow gap-1 h-full">
+                <Card className="text-center border-0 shadow-lg rounded-2xl bg-primary/5 dark:bg-primary/10 hover:shadow-xl transition-shadow gap-1 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <Brain className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <Brain className="w-8 h-8 text-primary-foreground" />
                     </div>
                     <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
                       4. Powered by AI
@@ -387,13 +387,13 @@ export default function LandingPage() {
 
               {/* Key Stat */}
               <motion.div
-                className="inline-block bg-amber-100 dark:bg-amber-900/30 rounded-2xl p-6 mb-12"
+                className="inline-block bg-primary/10 dark:bg-primary/20 rounded-2xl p-6 mb-12"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">
+                <div className="text-3xl font-bold text-primary dark:text-primary mb-2">
                   90%
                 </div>
-                <div className="text-sm text-red-700 dark:text-red-300">
+                <div className="text-sm text-primary/80 dark:text-primary/70">
                   of professionals forget key achievements by year-end
                 </div>
               </motion.div>
@@ -501,7 +501,7 @@ export default function LandingPage() {
                     achievement stories."
                   </p>
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
                       SK
                     </div>
                     <div className="ml-3">
@@ -530,7 +530,7 @@ export default function LandingPage() {
                     professional document ready for any opportunity."
                   </p>
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
                       MR
                     </div>
                     <div className="ml-3">
@@ -573,10 +573,10 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <Card className="border-0 shadow-xl rounded-2xl bg-amber-50 dark:bg-amber-950/20">
+                <Card className="border-0 shadow-xl rounded-2xl bg-primary/5 dark:bg-primary/10">
                   <CardHeader>
                     <CardTitle className="flex items-center text-xl font-bold text-slate-900 dark:text-white">
-                      <Zap className="w-5 h-5 mr-2 text-purple-600" />
+                      <Zap className="w-5 h-5 mr-2 text-primary" />
                       Try AI Enhancement
                     </CardTitle>
                     <CardDescription>
@@ -597,7 +597,7 @@ export default function LandingPage() {
                     <Button
                       onClick={handleAIEnhancement}
                       disabled={isEnhancing || !sampleAchievement.trim()}
-                      className="w-full bg-amber-500 hover:bg-amber-600"
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                     >
                       {isEnhancing ? (
                         <>
@@ -646,13 +646,13 @@ export default function LandingPage() {
                 viewport={{ once: true }}
               >
                 <Card className="pt-0 border-0 shadow-xl rounded-2xl overflow-hidden">
-                  <CardHeader className="bg-amber-500 text-white p-4">
+                  <CardHeader className="bg-primary text-primary-foreground p-4">
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="text-xl font-bold mb-2">
                           Reduced API Response Time by 75%
                         </CardTitle>
-                        <Badge className="bg-white/20 text-white border-white/30">
+                        <Badge className="bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30">
                           Performance Optimization
                         </Badge>
                       </div>
@@ -701,7 +701,7 @@ export default function LandingPage() {
                               "I logged a win with WinLog! 🚀 Reduced API response time by 75% and saved my company $800/month. #WinLog #BuildWithAI"
                             )
                           }
-                          className="w-full bg-amber-500 hover:bg-amber-600 text-white"
+                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                         >
                           <Share className="w-4 h-4 mr-2" />
                           Tweet Your Win
@@ -716,7 +716,7 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-amber-500 relative overflow-hidden">
+        <section className="py-20 bg-primary relative overflow-hidden">
           <motion.div
             className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative"
             initial={{ opacity: 0, y: 50 }}
@@ -738,7 +738,7 @@ export default function LandingPage() {
               >
                 <Button
                   size={"lg"}
-                  className="bg-white text-black hover:bg-gray-200 rounded-2xl px-8 md:w-1/4 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-2xl px-8 md:w-1/4 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
                 >
                   Get Started
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -754,8 +754,8 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-4 gap-8">
               <div>
                 <div className="flex items-center space-x-2 mb-4">
-                  <div className="w-8 h-8 bg-amber-500 rounded-xl flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-white" />
+                  <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <span className="text-xl font-bold">WinLog</span>
                 </div>

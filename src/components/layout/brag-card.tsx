@@ -30,12 +30,12 @@ const categoryIcons = {
 }
 
 const categoryColors = {
-  Performance: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200",
-  Leadership: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200",
-  Mentorship: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-  "Quality Assurance": "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
-  Product: "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200",
-  "Open Source": "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+  Performance: "bg-primary/20 text-primary dark:bg-primary/30 dark:text-primary",
+  Leadership: "bg-primary/15 text-primary dark:bg-primary/25 dark:text-primary",
+  Mentorship: "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary",
+  "Quality Assurance": "bg-primary/5 text-primary dark:bg-primary/15 dark:text-primary",
+  Product: "bg-primary/25 text-primary dark:bg-primary/35 dark:text-primary",
+  "Open Source": "bg-primary/30 text-primary dark:bg-primary/40 dark:text-primary",
 }
 
 export function BragCard({ brag, onEdit, onDelete }: BragCardProps) {
